@@ -59,6 +59,24 @@ public class Graph {
             dfs(gr,e.dest,vis);
         }
     }
+    
+    
+        public static void printAllPaths(ArrayList<Edge> gr[], int source, int target, String str,boolean vis[]){
+        if(source==target){
+            System.out.println(str);
+            return;
+        }
+
+        for(int i=0;i<gr[source].size();i++){
+            Edge e=gr[source].get(i);
+            if(!vis[e.dest]){
+                vis[source]=true;
+                printAllPaths(gr,e.dest,target,str+e.dest,vis);
+                vis[source]=false;
+            }
+        }
+
+    }
 
 
 
@@ -91,5 +109,9 @@ public class Graph {
             dfs(gr, i, vis1);
             }
         }
+        
+        //print all path from src to dest
+        boolean[] vis=new boolean[v];
+        printAllPaths(gr,0,3,"0",vis);
     }
 }
