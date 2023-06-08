@@ -77,8 +77,28 @@ public class Graph {
         }
 
     }
+    
+    
 
+    public static boolean isCycleDirected(ArrayList<Edge> gr[], boolean[] vis, int src, boolean[] recursionStack){
+        vis[src]=true;
+        recursionStack[src]=true;
 
+        for(int i=0;i<gr[src].size();i++){
+            Edge e=gr[src].get(i);
+            //cycle condition
+            if(recursionStack[e.dest]==true)
+                return true;
+
+            else if(vis[e.dest]==false){
+                if(isCycleDirected(gr,vis,e.dest, recursionStack)){
+                    return true;
+                }
+            }
+        }
+        recursionStack[src]=false;
+        return false;
+    }
 
 
     public static void main(String[] args){
@@ -113,5 +133,19 @@ public class Graph {
         //print all path from src to dest
         boolean[] vis=new boolean[v];
         printAllPaths(gr,0,3,"0",vis);
+        
+        //is cyclic directed graph
+        boolean[] vis=new boolean[v];
+        boolean[] rec=new boolean[v];
+        for(int i=0;i<v;i++){
+            if(!vis[i]){
+                boolean iscycle=isCycleDirected(gr,vis,0,rec);
+                if(iscycle){
+                    System.out.println(iscycle);
+                    break;
+                }
+            }
+        }
+        
     }
 }
