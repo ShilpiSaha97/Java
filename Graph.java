@@ -99,6 +99,35 @@ public class Graph {
         recursionStack[src]=false;
         return false;
     }
+    
+    
+        public static void topologicalSortingUtil(ArrayList<Edge> gr[], boolean[] vis, int src, Stack<Integer> stack){
+        vis[src]=true;
+
+        for(int i=0;i<gr[src].size();i++){
+            Edge e=gr[src].get(i);
+            if(vis[e.dest]==false){
+                topologicalSortingUtil(gr,vis,e.dest, stack);
+                }
+            }
+        stack.push(src);
+        }
+
+        public static void topSort(ArrayList<Edge> gr[],int v){
+
+        boolean vis[]=new boolean[v];
+        Stack<Integer> stack=new Stack<>();
+
+        for(int i=0;i<v;i++){
+            if(!vis[i]){
+                topologicalSortingUtil(gr,vis, i, stack);
+            }
+        }
+
+        while (!stack.isEmpty()){
+            System.out.println(stack.pop());
+        }
+        }
 
 
     public static void main(String[] args){
@@ -147,5 +176,8 @@ public class Graph {
             }
         }
         
+        
+       //topological sorting
+        topSort(gr,v);
     }
 }
