@@ -128,6 +128,21 @@ public class Graph {
             System.out.println(stack.pop());
         }
         }
+    
+        public static boolean cyclicUndirectedGraph(ArrayList<Edge> gr[], boolean[] vis, int src, int parent){
+        vis[src]=true;
+        for(int i=0;i<gr[src].size();i++){
+            Edge e=gr[src].get(i);
+            if(vis[e.dest]==true && e.dest!=parent){
+                return true;
+            }
+            else if(!vis[e.dest]){
+                if(cyclicUndirectedGraph(gr,vis,e.dest,src))
+                    return true;
+            }
+        }
+        return false;
+    }
 
 
     public static void main(String[] args){
@@ -179,5 +194,8 @@ public class Graph {
         
        //topological sorting
         topSort(gr,v);
+        
+        //Is cyclic undirected graph?
+        cyclicUndirectedGraph(gr, new boolean[v], 0, -1);
     }
 }
