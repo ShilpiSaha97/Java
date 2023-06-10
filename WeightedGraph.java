@@ -121,6 +121,29 @@ System.out.print(dist[i]+" ");
 }
 System.out.println();
 }
+    
+    
+    //Prim's algo for MST--> complexity=O(ElogE)
+public static void primAlgo(ArrayList<Edge> graph[]) {
+boolean vis[] = new boolean[graph.length];
+PriorityQueue<Pair> pq = new PriorityQueue<>();
+pq.add(new Pair(0, 0));
+int cost = 0;
+while(!pq.isEmpty()) {
+Pair curr = pq.remove();
+if(!vis[curr.v]) {
+vis[curr.v] = true;
+cost += curr.wt;
+for(int i=0; i<graph[curr.v].size(); i++) {
+Edge e = graph[curr.v].get(i);
+if(!vis[e.dest]) {
+pq.add(new Pair(e.dest, e.wt));
+}
+}
+}
+}
+System.out.println(cost);
+}
 
     public static void main(String[] args){
         int v=6;
@@ -130,6 +153,8 @@ System.out.println();
         
         int src = 0;
         bellmanFord(gr, src);
+        
+        primAlgo(gr);
 
     }
 }
