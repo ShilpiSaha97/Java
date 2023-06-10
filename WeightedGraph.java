@@ -100,6 +100,27 @@ dist[v] = dist[u] + wt;
 }
 }
 }
+    
+    
+    //Detecting Negative Weight Cycle in Bellman(for which the algo fails)
+for(int j=0; j<graph.length; j++) {
+for(int k=0; k<graph[j].size(); k++) {
+Edge e = graph[j].get(k);
+int u = e.src;
+int v = e.dest;
+int wt = e.wt;
+if(dist[u] != Integer.MAX_VALUE && dist[u]+wt < dist[v]) {
+System.out.println("negative weight cycle exists");
+break;
+}
+}
+}
+    
+for(int i=0; i<dist.length; i++) {
+System.out.print(dist[i]+" ");
+}
+System.out.println();
+}
 
     public static void main(String[] args){
         int v=6;
@@ -107,7 +128,8 @@ dist[v] = dist[u] + wt;
         create(gr);
         DijkstraAlgo(gr,0,v);
         
-        
+        int src = 0;
+        bellmanFord(gr, src);
 
     }
 }
