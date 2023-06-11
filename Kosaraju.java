@@ -40,7 +40,7 @@ dfs(graph, vis, e.dest);
 }
 }
 public static void kosaraju(ArrayList<Edge> graph[], int V) {
-//Step1
+//Step1---> Top sort and add to stack
 Stack<Integer> s = new Stack<>();
 boolean vis[] = new boolean[V];
 for(int i=0; i<V; i++) {
@@ -48,7 +48,7 @@ if(!vis[i]) {
 topSort(graph, i, s, vis);
 }
 }
-//Step2
+//Step2----> Transpose the graph i.e.,reverse the edges
 ArrayList<Edge> transpose[] = new ArrayList[V];
 for(int i=0; i<V; i++) {
 transpose[i] = new ArrayList<Edge>();
@@ -60,7 +60,7 @@ Edge e = graph[i].get(j);
 transpose[e.dest].add(new Edge(e.dest, e.src));
 }
 }
-//Step3
+//Step3----> call dfs on the transposed graph and print invidual component
 while(!s.isEmpty()) {
 int curr = s.pop();
 if(!vis[curr]) {
